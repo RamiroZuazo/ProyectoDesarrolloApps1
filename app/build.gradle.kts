@@ -33,29 +33,30 @@ android {
 
 dependencies {
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:<versión>'
-    -----------------------------------------------------------------
-    // Convertidor JSON (por ejemplo, Moshi o Gson)
-    implementation 'com.squareup.retrofit2:converter-gson:<versión>'
-    -----------------------------------------------------------------
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
     // OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:<versión>'
-    implementation 'com.squareup.okhttp3:logging-interceptor:<versión>'
-    -----------------------------------------------------------------
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.48")
     annotationProcessor("com.google.dagger:hilt-android-compiler:2.48")
-    -----------------------------------------------------------------
+
     // Desugaring
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
-    -----------------------------------------------------------------
 
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    // Material Components
+    implementation("com.google.android.material:material:1.11.0")
 
+    // AndroidX
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.activity:activity:1.8.2")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    // Testing
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
