@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <!-- Titulo de la pantalla -->
+    <TextView
+        android:id="@+id/tvCambiarContrasena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cambiar Contraseña"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:gravity="center"/>
+
+    <!-- Campo para la Nueva Contraseña -->
+    <EditText
+        android:id="@+id/etNuevaContrasena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nueva Contraseña"
+        android:inputType="textPassword"
+        android:importantForAutofill="yes"
+        app:layout_constraintTop_toBottomOf="@id/tvCambiarContrasena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
+
+    <!-- Campo para Confirmar la Nueva Contraseña -->
+    <EditText
+        android:id="@+id/etConfirmarContrasena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Confirmar Contraseña"
+        android:inputType="textPassword"
+        android:importantForAutofill="yes"
+        app:layout_constraintTop_toBottomOf="@id/etNuevaContrasena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
+
+    <!-- Botón para Cambiar la Contraseña -->
+    <Button
+        android:id="@+id/btnCambiarContrasena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Cambiar Contraseña"
+        app:layout_constraintTop_toBottomOf="@id/etConfirmarContrasena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

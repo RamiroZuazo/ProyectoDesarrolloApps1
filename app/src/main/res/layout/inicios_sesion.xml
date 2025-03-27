@@ -8,6 +8,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- Imagen en la parte superior -->
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:src="@drawable/logonuevo"
+        android:contentDescription="Logo de la app"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"/>
+
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -15,10 +27,10 @@
         android:text="Iniciar Sesión"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivLogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:gravity="center" />
 
     <EditText
@@ -74,5 +86,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp" />
+
+    <!-- Opción de Olvidaste tu Contraseña -->
+    <TextView
+        android:id="@+id/tvOlvidasteContrasena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Olvidaste tu contraseña?"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/btnCrearCuenta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

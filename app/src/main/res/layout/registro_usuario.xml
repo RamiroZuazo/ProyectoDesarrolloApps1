@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     android:padding="24dp">
 
+    <!-- Imagen en la parte superior -->
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logonuevo"
+        android:contentDescription="Logo de la app"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"/>
+
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
@@ -13,58 +25,91 @@
         android:text="Registro de Usuario"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivLogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"/>
 
-
+    <!-- Campo de Nombre Completo -->
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etNombreCompleto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Correo electrónico"
-        android:inputType="textEmailAddress"
-        android:autofillHints="emailAddress"
-        android:importantForAutofill="yes"
+        android:hint="Nombre Completo"
         app:layout_constraintTop_toBottomOf="@id/tvTitulo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"/>
 
+    <!-- Campo de Correo Electrónico -->
 
+    <!-- Campo de Contraseña -->
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:autofillHints="emailAddress"
+        android:hint="Correo electrónico"
+        android:importantForAutofill="yes"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etNombreCompleto" />
+
+    <!-- Campo de Repetir Contraseña -->
+
+    <!-- Campo de Teléfono -->
+
+    <!-- Botón de Registrarse -->
     <EditText
         android:id="@+id/etContrasena"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/etEmail"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
     <EditText
         android:id="@+id/etRepetirContrasena"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Repetir contraseña"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/etContrasena"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etContrasena" />
+
+    <EditText
+        android:id="@+id/etTelefono"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Teléfono"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etRepetirContrasena" />
 
     <Button
         android:id="@+id/btnRegistrarse"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Registrarse"
-        app:layout_constraintTop_toBottomOf="@id/etRepetirContrasena"
+        app:layout_constraintTop_toBottomOf="@id/etTelefono"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"/>
 
+    <!-- Texto para ir al Login -->
     <TextView
         android:id="@+id/tvIrAlLogin"
         android:layout_width="wrap_content"
