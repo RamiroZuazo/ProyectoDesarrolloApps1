@@ -34,7 +34,7 @@
     <EditText
         android:id="@+id/etNombreCompleto"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:hint="Nombre Completo"
         app:layout_constraintTop_toBottomOf="@id/tvTitulo"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="12dp"
         android:autofillHints="emailAddress"
         android:hint="Correo electrónico"
@@ -66,7 +66,7 @@
     <EditText
         android:id="@+id/etContrasena"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:hint="Contraseña"
         android:inputType="textPassword"
@@ -78,7 +78,7 @@
     <EditText
         android:id="@+id/etRepetirContrasena"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:hint="Repetir contraseña"
         android:inputType="textPassword"
@@ -90,7 +90,7 @@
     <EditText
         android:id="@+id/etTelefono"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="24dp"
         android:hint="Teléfono"
         android:inputType="phone"

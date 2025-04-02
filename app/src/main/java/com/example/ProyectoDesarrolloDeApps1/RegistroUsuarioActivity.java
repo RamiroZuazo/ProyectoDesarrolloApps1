@@ -3,41 +3,96 @@ package com.example.ProyectoDesarrolloDeApps1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.RegisterRequest;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.RegisterResponse;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.AuthRepository;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.AuthServiceCallback;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class RegistroUsuarioActivity extends AppCompatActivity {
 
-    TextView tvIrAlLogin;
+    @Inject
+    AuthRepository authRepository;
+
+    private EditText etNombreCompleto, etEmail, etContrasena, etRepetirContrasena, etTelefono;
+    private Button btnRegistrar;
+    private TextView tvIrAlLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.registro_usuario);
 
+        // Inicializar los campos
+        etNombreCompleto = findViewById(R.id.etNombreCompleto);
+        etEmail = findViewById(R.id.etEmail);
+        etContrasena = findViewById(R.id.etContrasena);
+        etRepetirContrasena = findViewById(R.id.etRepetirContrasena);
+        etTelefono = findViewById(R.id.etTelefono);
+        btnRegistrar = findViewById(R.id.btnRegistrarse);
+        tvIrAlLogin = findViewById(R.id.tvIrAlLogin);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.tvIrAlLogin), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        // Configurar el botón de registro
+        btnRegistrar.setOnClickListener(v -> {
+            String nombreCompleto = etNombreCompleto.getText().toString().trim();
+            String email = etEmail.getText().toString().trim();
+            String contrasena = etContrasena.getText().toString().trim();
+            String repetirContrasena = etRepetirContrasena.getText().toString().trim();
+            String telefono = etTelefono.getText().toString().trim();
+
+            // Validar campos
+            if (nombreCompleto.isEmpty() || email.isEmpty() || contrasena.isEmpty() || repetirContrasena.isEmpty() || telefono.isEmpty()) {
+                Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+            } else if (!contrasena.equals(repetirContrasena)) {
+                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            } else {
+                // Crear el objeto RegisterRequest
+                RegisterRequest registerRequest = new RegisterRequest(email, contrasena, nombreCompleto, telefono);
+
+                // Llamar al repositorio de Auth para registrar el usuario
+                registerUser(registerRequest);
+            }
         });
 
 
-        tvIrAlLogin = findViewById(R.id.tvIrAlLogin);
+        // Redirigir a la pantalla de login
+        tvIrAlLogin.setOnClickListener(v -> {
+            // Cambiar a la pantalla de login
+            Intent intent = new Intent(RegistroUsuarioActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+    }
 
-
-        tvIrAlLogin.setOnClickListener(new View.OnClickListener() {
+    private void registerUser(RegisterRequest request) {
+        authRepository.registerUser(request, new AuthServiceCallback() {
             @Override
-            public void onClick(View v) {
+            public void onSuccess(RegisterResponse response) {
+                // Aquí, el usuario se registró exitosamente, pero ahora manejas RegisterResponse
+                Toast.makeText(RegistroUsuarioActivity.this,
+                        "Registro exitoso. Bienvenido " + response.getUser().getName(), Toast.LENGTH_SHORT).show();
 
+                // Ir a la pantalla de login o pantalla principal
                 Intent intent = new Intent(RegistroUsuarioActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                // Manejar el error
+                Toast.makeText(RegistroUsuarioActivity.this,
+                        "Error en el registro: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

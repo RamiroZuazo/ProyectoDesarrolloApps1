@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Definimos las vistas
+    // Definimos las vistasx
     private EditText etEmail, etPassword;
     private Button btnIniciarSesion, btnCrearCuenta;
     private TextView tvOlvidasteContrasena;
@@ -84,9 +84,17 @@ public class MainActivity extends AppCompatActivity {
 
         // Acción de "Crear Cuenta"
         btnCrearCuenta.setOnClickListener(v -> {
-            // Redirigir a la actividad de registro de usuario
-            Intent intent = new Intent(MainActivity.this, RegistroUsuarioActivity.class);
-            startActivity(intent);
+            try {
+                // Redirigir a la actividad de registro de usuario
+                Intent intent = new Intent(MainActivity.this, RegistroUsuarioActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                // Registra el error y muestra un mensaje
+                e.printStackTrace();
+                Toast.makeText(MainActivity.this, "Error al navegar: " + e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
         });
+
     }
 }

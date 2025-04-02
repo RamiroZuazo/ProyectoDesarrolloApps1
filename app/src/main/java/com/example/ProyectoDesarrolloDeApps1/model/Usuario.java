@@ -3,32 +3,41 @@ package com.example.ProyectoDesarrolloDeApps1.model;
 import java.time.LocalDateTime;
 
 public class Usuario {
-    private Long id;
+    private String uid;
     private String email;
-    private String password;
     private String nombre;
     private String telefono;
     private LocalDateTime fechaCreacion;
-    private LocalDateTime fechaActualizacion;
 
-    //Getters y Setters
-    public Long getId() {
-        return id;
+    // Constructor vacío (necesario si usas serialización/deserialización)
+    public Usuario() {
     }
-    public void setId(Long id) {
-        this.id = id;
+
+    // Constructor con todos los campos
+    public Usuario(String uid, String email, String nombre, String telefono,
+                   LocalDateTime fechaCreacion) {  // Quitar fechaActualizacion, ya que no lo usas
+        this.uid = uid;
+        this.email = email;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.fechaCreacion = fechaCreacion;
     }
+
+    // Getters y Setters
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getNombre() {
@@ -53,24 +62,5 @@ public class Usuario {
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
-    }
-
-    public LocalDateTime getFechaActualizacion() {
-        return fechaActualizacion;
-    }
-
-    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
-        this.fechaActualizacion = fechaActualizacion;
-    }
-
-    //Constructor
-    public Usuario(Long id, String email, String password, String nombre, String telefono, LocalDateTime fechaCreacion, LocalDateTime fechaActualizacion) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.nombre = nombre;
-        this.telefono = telefono;
-        this.fechaCreacion = fechaCreacion;
-        this.fechaActualizacion = fechaActualizacion;
     }
 }
