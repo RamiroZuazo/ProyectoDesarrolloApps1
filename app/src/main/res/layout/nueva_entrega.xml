@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nueva Entrega"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"/>
+
+    <!-- Campo de Dirección -->
+    <EditText
+        android:id="@+id/etDireccion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Dirección"
+        android:inputType="textPostalAddress"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Campo de Cliente -->
+    <EditText
+        android:id="@+id/etCliente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del Cliente"
+        android:inputType="textPersonName"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/etDireccion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Campo de Descripción -->
+    <EditText
+        android:id="@+id/etDescripcion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Descripción"
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:gravity="top"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/etCliente"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Botón de Crear Entrega -->
+    <Button
+        android:id="@+id/btnCrearEntrega"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Crear Entrega"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/etDescripcion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout> 
