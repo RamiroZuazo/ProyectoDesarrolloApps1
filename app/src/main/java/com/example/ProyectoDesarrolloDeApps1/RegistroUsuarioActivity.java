@@ -65,7 +65,6 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
             }
         });
 
-
         // Redirigir a la pantalla de login
         tvIrAlLogin.setOnClickListener(v -> {
             // Cambiar a la pantalla de login
