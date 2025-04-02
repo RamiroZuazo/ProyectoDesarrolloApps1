@@ -32,9 +32,7 @@
         <activity
             android:name=".RecuperarContrasenaActivity"
             android:exported="true" />
-        <activity
-            android:name=".CambiarContrasenaActivity"
-            android:exported="true" />
+
     </application>
 
 
