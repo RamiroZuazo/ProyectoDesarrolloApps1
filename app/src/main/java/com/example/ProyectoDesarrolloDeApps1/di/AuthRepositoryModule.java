@@ -1,7 +1,7 @@
 package com.example.ProyectoDesarrolloDeApps1.di;
 
-import com.example.ProyectoDesarrolloDeApps1.data.repository.AuthRepository;
-import com.example.ProyectoDesarrolloDeApps1.data.repository.AuthRetrofitRepository;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.AuthRepository;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.AuthRetrofitRepository;
 
 import dagger.Binds;
 import dagger.Module;

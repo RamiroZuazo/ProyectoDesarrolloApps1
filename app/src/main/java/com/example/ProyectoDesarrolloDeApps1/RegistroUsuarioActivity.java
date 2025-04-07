@@ -2,7 +2,6 @@ package com.example.ProyectoDesarrolloDeApps1;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.RegisterRequest;
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.RegisterResponse;
-import com.example.ProyectoDesarrolloDeApps1.data.repository.AuthRepository;
-import com.example.ProyectoDesarrolloDeApps1.data.repository.AuthServiceCallback;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.AuthRepository;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.AuthServiceCallback;
 
 import javax.inject.Inject;
 

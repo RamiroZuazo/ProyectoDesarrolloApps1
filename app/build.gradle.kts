@@ -66,7 +66,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    
+    //EncryptedPreferences
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
+
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

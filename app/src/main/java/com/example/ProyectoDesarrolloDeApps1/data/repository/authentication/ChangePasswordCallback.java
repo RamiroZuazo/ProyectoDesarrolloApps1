@@ -1,4 +1,4 @@
-package com.example.ProyectoDesarrolloDeApps1.data.repository;
+package com.example.ProyectoDesarrolloDeApps1.data.repository.authentication;
 
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.ChangePasswordResponse;
 

@@ -16,6 +16,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.example.ProyectoDesarrolloDeApps1.data.repository.token.TokenRepository;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     // Definimos las vistasx
@@ -25,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Firebase Authentication
     private FirebaseAuth mAuth;
+
+    @Inject
+    TokenRepository tokenRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +75,21 @@ public class MainActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            // Si la validación es exitosa, navegar a la pantalla home
+                            // Si la validación es exitosa, obtener el token de Firebase
+                            mAuth.getCurrentUser().getIdToken(true) // El parámetro "true" indica que se actualice el token si es necesario
+                                    .addOnSuccessListener(idTokenResult -> {
+                                        String firebaseIdToken = idTokenResult.getToken();
+                                        if (firebaseIdToken != null) {
+                                            // Guardar el token de Firebase en el TokenRepository
+                                            tokenRepository.saveToken(firebaseIdToken);
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // Manejar el error al obtener el token
+                                        Toast.makeText(MainActivity.this, "Error al obtener el token de Firebase", Toast.LENGTH_SHORT).show();
+                                    });
+
+                            // Navegar a la pantalla home
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();  // Finaliza la actividad actual
@@ -75,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         });
+
 
         // Acción de "¿Olvidaste tu contraseña?"
         tvOlvidasteContrasena.setOnClickListener(v -> {

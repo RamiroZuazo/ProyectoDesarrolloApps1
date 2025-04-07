@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.ChangePasswordRequest;
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.ChangePasswordResponse;
-import com.example.ProyectoDesarrolloDeApps1.data.repository.AuthRepository;
-import com.example.ProyectoDesarrolloDeApps1.data.repository.ChangePasswordCallback;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.AuthRepository;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.ChangePasswordCallback;
 
 import javax.inject.Inject;
 
