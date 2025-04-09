@@ -1,6 +1,7 @@
 package com.example.ProyectoDesarrolloDeApps1.di;
 
 import com.example.ProyectoDesarrolloDeApps1.data.api.AuthApiService;
+import com.example.ProyectoDesarrolloDeApps1.data.api.OrdersApiService;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
@@ -58,5 +59,11 @@ public class NetworkModule {
     public AuthApiService provideAuthApiService(@Named("AuthRetrofit") Retrofit retrofit) {
         return retrofit.create(AuthApiService.class);
     }
-}
 
+
+    @Provides
+    @Singleton
+    public OrdersApiService provideOrdersApiService(@Named("pedidosRetrofit") Retrofit retrofit) {
+        return retrofit.create(OrdersApiService.class);
+    }
+}

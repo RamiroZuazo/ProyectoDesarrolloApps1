@@ -1,3 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DeRemate</string>
+    <string name="app_name">ProyectoDesarrolloApps1</string>
+    
+    <!-- Orders Layout -->
+    <string name="orders_title">Pedidos No Asignados</string>
+    <string name="column_id">ID</string>
+    <string name="column_customer">Cliente</string>
+    <string name="column_address">Dirección</string>
+    <string name="column_status">Estado</string>
+    <string name="column_action">Acción</string>
+    <string name="total_unassigned_orders">Total de pedidos no asignados: </string>
+    <string name="assign_button">Asignar</string>
+    
+    <!-- Order Item Labels -->
+    <string name="label_cliente">Cliente:</string>
+    <string name="label_direccion">Dirección de entrega:</string>
+    <string name="label_estado">Estado:</string>
+    <string name="label_pedido">Pedido #</string>
+    
+    <!-- Order Status -->
+    <string name="status_unassigned">No Asignado</string>
+    <string name="status_assigned">Asignado</string>
+    <string name="status_in_progress">En Proceso</string>
+    <string name="status_completed">Completado</string>
+    
+    <!-- Messages -->
+    <string name="order_assigned_success">Pedido asignado exitosamente</string>
+    <string name="order_assigned_error">Error al asignar el pedido</string>
+    <string name="loading_orders">Cargando pedidos…</string>
+    <string name="no_orders_found">No hay pedidos sin asignar</string>
 </resources>

@@ -2,6 +2,32 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimary">#2979FF</color>
     <color name="colorSecondary">#03DAC5</color>
+    <color name="colorPrimaryDark">#2962FF</color>
+    <color name="colorAccent">#FFA000</color>
+    
+    <!-- Estados de Pedidos -->
+    <color name="colorEstadoNoAsignado">#FFF3E0</color>
+    <color name="colorEstadoNoAsignadoBorde">#FFB74D</color>
+    <color name="colorEstadoAsignado">#E8F5E9</color>
+    <color name="colorEstadoAsignadoBorde">#66BB6A</color>
+    <color name="colorEstadoEnProceso">#E3F2FD</color>
+    <color name="colorEstadoEnProcesoBorde">#42A5F5</color>
+    <color name="colorEstadoCompletado">#F5F5F5</color>
+    <color name="colorEstadoCompletadoBorde">#9E9E9E</color>
+    <color name="colorEstadoCancelado">#FFEBEE</color>
+    <color name="colorEstadoCanceladoBorde">#EF5350</color>
+    
+    <!-- Text Colors -->
+    <color name="textPrimary">#000000</color>
+    <color name="textSecondary">#666666</color>
+    
+    <!-- Background Colors -->
+    <color name="backgroundPrimary">@android:color/white</color>
+    <color name="backgroundSecondary">#F5F5F5</color>
+    <color name="backgroundHeader">#EEEEEE</color>
+    
+    <!-- Divider Colors -->
+    <color name="divider">#E0E0E0</color>
 </resources>
