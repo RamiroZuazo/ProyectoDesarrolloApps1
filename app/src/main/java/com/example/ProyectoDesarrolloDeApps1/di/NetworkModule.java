@@ -14,7 +14,7 @@ import javax.inject.Named;
 import java.util.concurrent.TimeUnit;
 
 @Module
-@InstallIn(SingletonComponent.class)  // Instala el módulo en el SingletonComponent
+@InstallIn(SingletonComponent.class)
 public class NetworkModule {
 
     @Provides
@@ -33,10 +33,21 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    @Named("AuthRetrofit")  // Se usa Named para que Retrofit pueda ser inyectado correctamente
+    @Named("AuthRetrofit")
     public Retrofit provideAuthRetrofit(OkHttpClient client) {
         return new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3000/auth/")  // Ajusta la URL a la de tu servidor
+                .baseUrl("http://10.0.2.2:3000/auth/")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    @Named("pedidosRetrofit")
+    public Retrofit providePedidosRetrofit(OkHttpClient client) {
+        return new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:3000/pedidos/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

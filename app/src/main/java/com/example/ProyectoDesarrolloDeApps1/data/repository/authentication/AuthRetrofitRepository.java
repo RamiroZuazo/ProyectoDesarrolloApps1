@@ -1,10 +1,10 @@
 package com.example.ProyectoDesarrolloDeApps1.data.repository.authentication;
 
 import com.example.ProyectoDesarrolloDeApps1.data.api.AuthApiService;
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.ChangePasswordRequest;
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.ChangePasswordResponse;
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.RegisterRequest;
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.RegisterResponse;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.ChangePasswordRequest;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.ChangePasswordResponse;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.RegisterRequest;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.RegisterResponse;
 import com.example.ProyectoDesarrolloDeApps1.model.Usuario;
 
 import javax.inject.Inject;
@@ -39,11 +39,11 @@ public class AuthRetrofitRepository implements AuthRepository {
                             authUser.getEmail(),
                             authUser.getName(),
                             authUser.getPhone(),
-                            null // Puede recibir fecha de creación si tu backend la devuelve
+                            null
                     );
 
                     // Llamamos a callback.onSuccess con el usuario
-                    callback.onSuccess(res);  // Pasamos RegisterResponse a onSuccess
+                    callback.onSuccess(res);
                 } else {
                     callback.onError(new Exception("Error en la respuesta: " + response.message()));
                 }
@@ -62,7 +62,6 @@ public class AuthRetrofitRepository implements AuthRepository {
             @Override
             public void onResponse(Call<ChangePasswordResponse> call, Response<ChangePasswordResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Aquí puedes manejar la respuesta de la forma que necesites
                     ChangePasswordResponse changePasswordResponse = response.body();
                     callback.onSuccess(changePasswordResponse);
                 } else {

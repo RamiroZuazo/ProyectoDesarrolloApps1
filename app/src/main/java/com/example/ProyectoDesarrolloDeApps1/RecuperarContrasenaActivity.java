@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.ChangePasswordRequest;
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.ChangePasswordResponse;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.ChangePasswordRequest;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.ChangePasswordResponse;
 import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.AuthRepository;
 import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.ChangePasswordCallback;
 

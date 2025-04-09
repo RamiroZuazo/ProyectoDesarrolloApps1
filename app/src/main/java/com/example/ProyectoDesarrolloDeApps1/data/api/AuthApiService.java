@@ -1,9 +1,9 @@
 package com.example.ProyectoDesarrolloDeApps1.data.api;
 
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.ChangePasswordRequest;
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.ChangePasswordResponse;
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.RegisterRequest;
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.RegisterResponse;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.ChangePasswordRequest;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.ChangePasswordResponse;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.RegisterRequest;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.RegisterResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

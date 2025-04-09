@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
-    // Definimos las vistasx
+    // Definimos las vistas
     private EditText etEmail, etPassword;
     private Button btnIniciarSesion, btnCrearCuenta;
     private TextView tvOlvidasteContrasena;
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
                             // Si la validación es exitosa, obtener el token de Firebase
-                            mAuth.getCurrentUser().getIdToken(true) // El parámetro "true" indica que se actualice el token si es necesario
+                            mAuth.getCurrentUser().getIdToken(true)
                                     .addOnSuccessListener(idTokenResult -> {
                                         String firebaseIdToken = idTokenResult.getToken();
                                         if (firebaseIdToken != null) {

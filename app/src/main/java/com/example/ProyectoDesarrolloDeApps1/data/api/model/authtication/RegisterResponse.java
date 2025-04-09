@@ -1,4 +1,4 @@
-package com.example.ProyectoDesarrolloDeApps1.data.api.model;
+package com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication;
 
 public class RegisterResponse {
     private String message;

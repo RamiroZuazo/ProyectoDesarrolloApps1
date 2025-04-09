@@ -1,8 +1,8 @@
-package com.example.ProyectoDesarrolloDeApps1.data.api.model;
+package com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication;
 
 public class ChangePasswordResponse {
-    private boolean success;   // o la estructura que venga de tu backend
-    private String message;    // por ejemplo, "Contraseña actualizada correctamente"
+    private boolean success;
+    private String message;
 
     // Getters y setters
     public boolean isSuccess() {

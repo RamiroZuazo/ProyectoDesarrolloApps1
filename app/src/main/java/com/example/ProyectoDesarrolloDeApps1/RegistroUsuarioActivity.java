@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.RegisterRequest;
-import com.example.ProyectoDesarrolloDeApps1.data.api.model.RegisterResponse;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.RegisterRequest;
+import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.RegisterResponse;
 import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.AuthRepository;
 import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.AuthServiceCallback;
 
@@ -76,7 +76,6 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         authRepository.registerUser(request, new AuthServiceCallback() {
             @Override
             public void onSuccess(RegisterResponse response) {
-                // Aquí, el usuario se registró exitosamente, pero ahora manejas RegisterResponse
                 Toast.makeText(RegistroUsuarioActivity.this,
                         "Registro exitoso. Bienvenido " + response.getUser().getName(), Toast.LENGTH_SHORT).show();
 
@@ -88,7 +87,6 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable error) {
-                // Manejar el error
                 Toast.makeText(RegistroUsuarioActivity.this,
                         "Error en el registro: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }

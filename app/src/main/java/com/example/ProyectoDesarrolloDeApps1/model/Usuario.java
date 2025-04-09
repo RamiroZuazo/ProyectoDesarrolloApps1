@@ -15,7 +15,7 @@ public class Usuario {
 
     // Constructor con todos los campos
     public Usuario(String uid, String email, String nombre, String telefono,
-                   LocalDateTime fechaCreacion) {  // Quitar fechaActualizacion, ya que no lo usas
+                   LocalDateTime fechaCreacion) {
         this.uid = uid;
         this.email = email;
         this.nombre = nombre;

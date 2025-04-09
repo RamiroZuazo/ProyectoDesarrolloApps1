@@ -1,5 +1,5 @@
 // RegisterRequest.java
-package com.example.ProyectoDesarrolloDeApps1.data.api.model;
+package com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication;
 
 public class RegisterRequest {
     private String email;
@@ -14,5 +14,4 @@ public class RegisterRequest {
         this.phone = phone;
     }
 
-    // getters y setters si los necesitas
 }
