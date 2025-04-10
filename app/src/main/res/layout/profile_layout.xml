@@ -110,7 +110,5 @@
                 android:src="@drawable/ic_arrow_right"
                 app:tint="#FF3B30"/>
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout> 

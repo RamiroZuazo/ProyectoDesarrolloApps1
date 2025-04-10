@@ -41,7 +41,8 @@ public class HomeActivity extends AppCompatActivity {
 
         // Favoritos
         findViewById(R.id.nav_favorites).setOnClickListener(v -> {
-            // Aquí puedes cargar el fragment de favoritos cuando lo implementes
+            // Cargar el fragment de historial
+            loadFragment(new HistorialFragment());
         });
 
         // Profile

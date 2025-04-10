@@ -64,8 +64,11 @@ public class ProfileFragment extends Fragment {
         // Configurar listeners
         if (editProfileOption != null) {
             editProfileOption.setOnClickListener(v -> {
-                Toast.makeText(getContext(), "Editar Perfil", Toast.LENGTH_SHORT).show();
-                // Aquí implementarías la navegación a la pantalla de edición de perfil
+                // Navegar al fragment de detalles del perfil
+                getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new ProfileDetailsFragment())
+                    .addToBackStack(null)
+                    .commit();
             });
         }
 
