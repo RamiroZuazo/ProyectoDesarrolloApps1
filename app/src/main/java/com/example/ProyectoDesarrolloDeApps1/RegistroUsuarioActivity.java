@@ -13,6 +13,7 @@ import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.Registe
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.RegisterResponse;
 import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.AuthRepository;
 import com.example.ProyectoDesarrolloDeApps1.data.repository.authentication.AuthServiceCallback;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.token.TokenRepository;
 
 import javax.inject.Inject;
 
@@ -23,6 +24,9 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
 
     @Inject
     AuthRepository authRepository;
+
+    @Inject
+    TokenRepository tokenRepository;
 
     private EditText etNombreCompleto, etEmail, etContrasena, etRepetirContrasena, etTelefono;
     private Button btnRegistrar;
@@ -76,6 +80,11 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         authRepository.registerUser(request, new AuthServiceCallback() {
             @Override
             public void onSuccess(RegisterResponse response) {
+                // Guardar el token recibido
+                if (response.getToken() != null) {
+                    tokenRepository.saveToken(response.getToken());
+                }
+                
                 Toast.makeText(RegistroUsuarioActivity.this,
                         "Registro exitoso. Bienvenido " + response.getUser().getName(), Toast.LENGTH_SHORT).show();
 

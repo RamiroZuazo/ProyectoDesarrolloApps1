@@ -28,12 +28,12 @@ public class HomeActivity extends AppCompatActivity {
     private void setupNavigation() {
         // Home
         findViewById(R.id.nav_home).setOnClickListener(v -> loadFragment(new PedidosFragment()));
-        
+
         // Record
         findViewById(R.id.nav_cards).setOnClickListener(v -> {
             // Aquí puedes cargar el fragment de record cuando lo implementes
         });
-        
+
         // QR
         findViewById(R.id.nav_qr).setOnClickListener(v -> {
             // Aquí puedes cargar el fragment de QR cuando lo implementes
@@ -43,10 +43,11 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.nav_favorites).setOnClickListener(v -> {
             // Aquí puedes cargar el fragment de favoritos cuando lo implementes
         });
-        
+
         // Profile
         findViewById(R.id.nav_profile).setOnClickListener(v -> {
-            // Aquí puedes cargar el fragment de perfil cuando lo implementes
+            // Cargar el fragment de perfil
+            loadFragment(new ProfileFragment());
         });
     }
 
