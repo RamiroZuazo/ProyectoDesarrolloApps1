@@ -24,7 +24,7 @@
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp">
 
-        <!-- Inicio -->
+        <!-- Menú -->
         <LinearLayout
             android:id="@+id/nav_home"
             android:layout_width="0dp"
@@ -44,11 +44,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Home"
+                android:text="Menú"
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <!-- Tarjetas -->
+        <!-- Pedidos -->
         <LinearLayout
             android:id="@+id/nav_cards"
             android:layout_width="0dp"
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Record"
+                android:text="Pedidos"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -103,7 +103,7 @@
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <!-- Favoritos -->
+        <!-- Historial -->
         <LinearLayout
             android:id="@+id/nav_favorites"
             android:layout_width="0dp"
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Orders"
+                android:text="Historial"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -147,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Profile"
+                android:text="Perfil"
                 android:textSize="11sp" />
         </LinearLayout>
     </LinearLayout>

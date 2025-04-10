@@ -77,10 +77,12 @@ public class ProfileFragment extends Fragment {
                 // Limpiar el token almacenado
                 tokenRepository.clearToken();
                 
-                // Navegar a la pantalla de inicio de sesión
+                // Forzar el reinicio de la aplicación
                 Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 getActivity().finish();
+                Runtime.getRuntime().exit(0);
             });
         }
 
