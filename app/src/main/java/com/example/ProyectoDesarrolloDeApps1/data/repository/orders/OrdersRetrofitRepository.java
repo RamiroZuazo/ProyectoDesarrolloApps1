@@ -2,6 +2,7 @@ package com.example.ProyectoDesarrolloDeApps1.data.repository.orders;
 
 import com.example.ProyectoDesarrolloDeApps1.data.api.OrdersApiService;
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.orders.OrdersUnasignedResponse;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.token.TokenRepository;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -14,30 +15,38 @@ import retrofit2.Response;
 public class OrdersRetrofitRepository implements OrdersRepository {
 
     private final OrdersApiService ordersApiService;
+    private final TokenRepository tokenRepository;
 
     @Inject
-    public OrdersRetrofitRepository(OrdersApiService ordersApiService) {
+    public OrdersRetrofitRepository(
+            OrdersApiService ordersApiService,
+            TokenRepository tokenRepository
+    ) {
         this.ordersApiService = ordersApiService;
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
     public void obtenerPedidosNoAsignados(OrdersServiceCallback callback) {
-        ordersApiService.obtenerPedidosNoAsignados().enqueue(new Callback<OrdersUnasignedResponse>() {
-            @Override
-            public void onResponse(Call<OrdersUnasignedResponse> call, Response<OrdersUnasignedResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    OrdersUnasignedResponse pedidoResponse = response.body();
-                    // Llamamos a callback.onSuccess con la respuesta de los pedidos
-                    callback.onSuccess(pedidoResponse);
-                } else {
-                    callback.onError(new Exception("Error en la respuesta: " + response.message()));
-                }
-            }
+        String token = tokenRepository.getToken();
+        String authHeader = "Bearer " + token;
 
-            @Override
-            public void onFailure(Call<OrdersUnasignedResponse> call, Throwable t) {
-                callback.onError(t);
-            }
-        });
+        ordersApiService.obtenerPedidosNoAsignados(authHeader)
+                .enqueue(new Callback<OrdersUnasignedResponse>() {
+                    @Override
+                    public void onResponse(Call<OrdersUnasignedResponse> call,
+                                           Response<OrdersUnasignedResponse> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            callback.onSuccess(response.body());
+                        } else {
+                            callback.onError(new Exception("Error en la respuesta: " + response.message()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrdersUnasignedResponse> call, Throwable t) {
+                        callback.onError(t);
+                    }
+                });
     }
 }

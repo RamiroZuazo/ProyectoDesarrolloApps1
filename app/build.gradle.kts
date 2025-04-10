@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    //card view
+    implementation("androidx.cardview:cardview:1.0.0")
     //EncryptedPreferences
     implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
 

@@ -48,7 +48,7 @@ public class NetworkModule {
     @Named("pedidosRetrofit")
     public Retrofit providePedidosRetrofit(OkHttpClient client) {
         return new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3000/pedidos/")
+                .baseUrl("http://10.0.2.2:3000/orders/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

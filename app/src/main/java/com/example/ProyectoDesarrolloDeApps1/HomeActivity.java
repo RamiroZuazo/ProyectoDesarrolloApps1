@@ -1,6 +1,7 @@
 package com.example.ProyectoDesarrolloDeApps1;
 
 import android.os.Bundle;
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,16 +16,44 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
+        // Configurar los listeners de navegación
+        setupNavigation();
+
         // Cargar el fragment de pedidos al inicio
         if (savedInstanceState == null) {
             loadFragment(new PedidosFragment());
         }
     }
 
+    private void setupNavigation() {
+        // Home
+        findViewById(R.id.nav_home).setOnClickListener(v -> loadFragment(new PedidosFragment()));
+        
+        // Record
+        findViewById(R.id.nav_cards).setOnClickListener(v -> {
+            // Aquí puedes cargar el fragment de record cuando lo implementes
+        });
+        
+        // QR
+        findViewById(R.id.nav_qr).setOnClickListener(v -> {
+            // Aquí puedes cargar el fragment de QR cuando lo implementes
+        });
+
+        // Favoritos
+        findViewById(R.id.nav_favorites).setOnClickListener(v -> {
+            // Aquí puedes cargar el fragment de favoritos cuando lo implementes
+        });
+        
+        // Profile
+        findViewById(R.id.nav_profile).setOnClickListener(v -> {
+            // Aquí puedes cargar el fragment de perfil cuando lo implementes
+        });
+    }
+
     // Método para reemplazar el fragmento
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment); // Reemplaza el contenido del FrameLayout
-        transaction.commit(); // Ejecutar la transacción
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 }
