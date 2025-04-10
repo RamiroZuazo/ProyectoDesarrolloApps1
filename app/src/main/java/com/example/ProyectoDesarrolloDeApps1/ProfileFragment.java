@@ -2,6 +2,7 @@ package com.example.ProyectoDesarrolloDeApps1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class ProfileFragment extends Fragment {
 
+    private static final String TAG = "ProfileFragment";
     private TextView userName;
     private TextView userEmail;
     private LinearLayout editProfileOption;
-    private LinearLayout settingsOption;
     private LinearLayout logoutOption;
 
     @Inject
@@ -50,32 +51,38 @@ public class ProfileFragment extends Fragment {
         userName = view.findViewById(R.id.userName);
         userEmail = view.findViewById(R.id.userEmail);
         editProfileOption = view.findViewById(R.id.editProfileOption);
-        settingsOption = view.findViewById(R.id.settingsOption);
         logoutOption = view.findViewById(R.id.logoutOption);
 
+        // Verificar si los elementos fueron encontrados
+        if (editProfileOption == null) {
+            Log.e(TAG, "editProfileOption no encontrado en el layout");
+        }
+        if (logoutOption == null) {
+            Log.e(TAG, "logoutOption no encontrado en el layout");
+        }
+
         // Configurar listeners
-        editProfileOption.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Editar Perfil", Toast.LENGTH_SHORT).show();
-            // Aquí implementarías la navegación a la pantalla de edición de perfil
-        });
+        if (editProfileOption != null) {
+            editProfileOption.setOnClickListener(v -> {
+                Toast.makeText(getContext(), "Editar Perfil", Toast.LENGTH_SHORT).show();
+                // Aquí implementarías la navegación a la pantalla de edición de perfil
+            });
+        }
 
-        settingsOption.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Configuración", Toast.LENGTH_SHORT).show();
-            // Aquí implementarías la navegación a la pantalla de configuración
-        });
-
-        logoutOption.setOnClickListener(v -> {
-            // Cerrar sesión en Firebase
-            mAuth.signOut();
-            
-            // Limpiar el token almacenado
-            tokenRepository.clearToken();
-            
-            // Navegar a la pantalla de inicio de sesión
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-        });
+        if (logoutOption != null) {
+            logoutOption.setOnClickListener(v -> {
+                // Cerrar sesión en Firebase
+                mAuth.signOut();
+                
+                // Limpiar el token almacenado
+                tokenRepository.clearToken();
+                
+                // Navegar a la pantalla de inicio de sesión
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            });
+        }
 
         // TODO: Cargar los datos del usuario actual
         // Por ahora, dejamos los valores por defecto en el XML
