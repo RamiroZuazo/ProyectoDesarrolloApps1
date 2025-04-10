@@ -59,7 +59,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Edit Profile"
+                android:text="Tu Perfil"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp"
                 android:textColor="#000000"/>
@@ -94,7 +94,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Settings"
+                android:text="Configuración"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp"
                 android:textColor="#000000"/>
@@ -136,7 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Log Out"
+                android:text="Cerrar Sesión"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp"
                 android:textColor="#FF3B30"/>

@@ -1,5 +1,6 @@
 package com.example.ProyectoDesarrolloDeApps1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import com.example.ProyectoDesarrolloDeApps1.data.repository.token.TokenRepository;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -21,6 +28,11 @@ public class ProfileFragment extends Fragment {
     private LinearLayout settingsOption;
     private LinearLayout logoutOption;
 
+    @Inject
+    TokenRepository tokenRepository;
+
+    private FirebaseAuth mAuth;
+
     public ProfileFragment() {
         // Constructor vacío requerido
     }
@@ -30,6 +42,9 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflar el layout para este fragmento
         View view = inflater.inflate(R.layout.profile_layout, container, false);
+
+        // Inicializar Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         // Inicializar las vistas
         userName = view.findViewById(R.id.userName);
@@ -50,8 +65,16 @@ public class ProfileFragment extends Fragment {
         });
 
         logoutOption.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Cerrar Sesión", Toast.LENGTH_SHORT).show();
-            // Aquí implementarías la lógica para cerrar sesión
+            // Cerrar sesión en Firebase
+            mAuth.signOut();
+            
+            // Limpiar el token almacenado
+            tokenRepository.clearToken();
+            
+            // Navegar a la pantalla de inicio de sesión
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+            getActivity().finish();
         });
 
         // TODO: Cargar los datos del usuario actual
