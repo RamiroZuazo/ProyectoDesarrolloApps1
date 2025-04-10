@@ -1,6 +1,7 @@
 package com.example.ProyectoDesarrolloDeApps1;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class PedidosFragment extends Fragment {
+    private static final String TAG = "PedidosFragment";
 
     @Inject
     OrdersRepository ordersRepository; // Inyectamos el repositorio, no el ApiService
@@ -42,6 +44,12 @@ public class PedidosFragment extends Fragment {
 
         // Inicializar el LinearLayout donde se mostrarán los pedidos
         pedidosLayout = view.findViewById(R.id.pedidosLayout);
+        
+        if (pedidosLayout == null) {
+            Log.e(TAG, "pedidosLayout es NULL - No se encontró la vista con ID pedidosLayout");
+        } else {
+            Log.d(TAG, "pedidosLayout encontrado correctamente");
+        }
 
         // Cargar los pedidos a través del repositorio
         loadPedidos();
@@ -50,18 +58,34 @@ public class PedidosFragment extends Fragment {
     }
 
     private void loadPedidos() {
+        Log.d(TAG, "Iniciando carga de pedidos...");
         // Realizar la llamada para obtener pedidos no asignados usando el repositorio
         ordersRepository.obtenerPedidosNoAsignados(new OrdersServiceCallback() {
             @Override
             public void onSuccess(OrdersUnasignedResponse response) {
-                if (response.getPedidos() != null) {
-                    displayPedidos(response.getPedidos());
+                Log.d(TAG, "API respondió exitosamente");
+                if (response == null) {
+                    Log.e(TAG, "La respuesta es NULL");
+                    return;
                 }
+                
+                if (response.getPedidos() == null) {
+                    Log.e(TAG, "La lista de pedidos es NULL");
+                    return;
+                }
+                
+                Log.d(TAG, "Pedidos recibidos: " + response.getPedidos().size());
+                for (OrdersUnasignedResponse.Pedido pedido : response.getPedidos()) {
+                    Log.d(TAG, "Pedido: ID=" + pedido.getId() + ", Estante=" + pedido.getEstante() + ", Góndola=" + pedido.getGondola());
+                }
+                
+                displayPedidos(response.getPedidos());
             }
 
             @Override
             public void onError(Throwable error) {
                 // Mostrar un mensaje de error si falla
+                Log.e(TAG, "Error al cargar los pedidos: " + error.getMessage(), error);
                 Toast.makeText(getContext(),
                         "Error al cargar los pedidos: " + error.getMessage(),
                         Toast.LENGTH_SHORT).show();
@@ -72,9 +96,12 @@ public class PedidosFragment extends Fragment {
     private void displayPedidos(List<OrdersUnasignedResponse.Pedido> pedidos) {
         // Asegurarse de que pedidosLayout no sea null
         if (pedidosLayout == null) {
+            Log.e(TAG, "No se puede mostrar pedidos porque pedidosLayout es NULL");
             return;
         }
 
+        Log.d(TAG, "Mostrando " + pedidos.size() + " pedidos");
+        
         // Limpiar los pedidos anteriores
         pedidosLayout.removeAllViews();
 
@@ -89,60 +116,38 @@ public class PedidosFragment extends Fragment {
                     LinearLayout.LayoutParams.WRAP_CONTENT
             ));
             pedidosLayout.addView(noPedidosText);
+            Log.d(TAG, "No hay pedidos para mostrar");
             return;
         }
 
         // Iterar sobre la lista de pedidos y agregarlos al LinearLayout
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         for (OrdersUnasignedResponse.Pedido pedido : pedidos) {
-            // Crear un nuevo CardView para cada pedido
-            MaterialCardView cardView = new MaterialCardView(getContext());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(0, 0, 0, 16); // Margen inferior entre cards
-            cardView.setLayoutParams(params);
-
-            // Configurar el CardView
-            cardView.setContentPadding(30, 30, 30, 30);
-            cardView.setRadius(16f);
-            cardView.setCardElevation(4f);
-            cardView.setUseCompatPadding(true);
-
-            // Crear un LinearLayout para contener los detalles del pedido
-            LinearLayout layout = new LinearLayout(getContext());
-            layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setPadding(16, 16, 16, 16);
-
-            // Crear los TextViews para mostrar la información del pedido
-            TextView tvEstante = new TextView(getContext());
+            // Inflar la vista de item_pedido
+            View pedidoView = inflater.inflate(R.layout.item_pedido, pedidosLayout, false);
+            
+            // Obtener referencias a los TextViews dentro del layout inflado
+            TextView tvEstante = pedidoView.findViewById(R.id.tvEstantePedido);
+            TextView tvGondola = pedidoView.findViewById(R.id.tvGondolaPedido);
+            
+            if (tvEstante == null || tvGondola == null) {
+                Log.e(TAG, "No se encontraron las vistas dentro de item_pedido.xml");
+                continue;
+            }
+            
+            // Establecer los datos del pedido en las vistas
             tvEstante.setText("Estante: " + pedido.getEstante());
-            tvEstante.setTextSize(18);
-            tvEstante.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-            tvEstante.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
-
-            TextView tvGondola = new TextView(getContext());
             tvGondola.setText("Góndola: " + pedido.getGondola());
-            tvGondola.setTextSize(16);
-            tvGondola.setTextColor(ContextCompat.getColor(getContext(), android.R.color.darker_gray));
-            tvGondola.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
+            
+            Log.d(TAG, "Agregando pedido a la vista: Estante=" + pedido.getEstante() + ", Góndola=" + pedido.getGondola());
 
-            // Agregar los TextViews al layout
-            layout.addView(tvEstante);
-            layout.addView(tvGondola);
-
-            // Agregar el layout al CardView
-            cardView.addView(layout);
-
-            // Finalmente, agregar el CardView al LinearLayout principal
-            pedidosLayout.addView(cardView);
+            // Agregar la vista inflada al layout principal
+            pedidosLayout.addView(pedidoView);
         }
+        
+        // Forzar un redibujado del layout
+        pedidosLayout.invalidate();
+        
+        Log.d(TAG, "Pedidos mostrados correctamente. Cantidad: " + pedidos.size());
     }
-
 }

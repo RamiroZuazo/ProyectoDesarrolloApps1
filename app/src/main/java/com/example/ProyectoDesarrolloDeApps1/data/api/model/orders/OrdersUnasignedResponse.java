@@ -1,8 +1,10 @@
 package com.example.ProyectoDesarrolloDeApps1.data.api.model.orders;
 
 import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 public class OrdersUnasignedResponse {
+    @SerializedName("orders")
     private List<Pedido> pedidos;
 
     public List<Pedido> getPedidos() {
@@ -15,8 +17,12 @@ public class OrdersUnasignedResponse {
 
     public static class Pedido {
         private String id;
-        private String estante;
-        private String gondola;
+        
+        @SerializedName("estante")
+        private int estante;
+        
+        @SerializedName("gondola")
+        private int gondola;
 
         public String getId() {
             return id;
@@ -27,19 +33,27 @@ public class OrdersUnasignedResponse {
         }
 
         public String getEstante() {
-            return estante;
+            return String.valueOf(estante);
         }
 
         public void setEstante(String estante) {
-            this.estante = estante;
+            try {
+                this.estante = Integer.parseInt(estante);
+            } catch (NumberFormatException e) {
+                this.estante = 0;
+            }
         }
 
         public String getGondola() {
-            return gondola;
+            return String.valueOf(gondola);
         }
 
         public void setGondola(String gondola) {
-            this.gondola = gondola;
+            try {
+                this.gondola = Integer.parseInt(gondola);
+            } catch (NumberFormatException e) {
+                this.gondola = 0;
+            }
         }
     }
 }
