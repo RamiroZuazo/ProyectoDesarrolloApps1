@@ -40,10 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         // Favoritos
-        findViewById(R.id.nav_favorites).setOnClickListener(v -> {
-            // Cargar el fragment de historial
-            loadFragment(new HistorialFragment());
-        });
+
 
         // Profile
         findViewById(R.id.nav_profile).setOnClickListener(v -> {

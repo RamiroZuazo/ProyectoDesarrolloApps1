@@ -11,8 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import com.example.ProyectoDesarrolloDeApps1.data.repository.token.TokenRepository;
 
@@ -27,6 +29,7 @@ public class ProfileFragment extends Fragment {
     private TextView userName;
     private TextView userEmail;
     private LinearLayout editProfileOption;
+    private LinearLayout cambiarContrasenaOption;
     private LinearLayout logoutOption;
 
     @Inject
@@ -53,9 +56,29 @@ public class ProfileFragment extends Fragment {
         editProfileOption = view.findViewById(R.id.editProfileOption);
         logoutOption = view.findViewById(R.id.logoutOption);
 
+        // Obtener el usuario actual
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String name = currentUser.getDisplayName();
+            String email = currentUser.getEmail();
+
+            if (name != null && !name.isEmpty()) {
+                userName.setText(name);
+            } else {
+                userName.setText("Usuario"); // Valor por defecto si el nombre no está disponible
+            }
+
+            if (email != null) {
+                userEmail.setText(email);
+            }
+        }
+
         // Verificar si los elementos fueron encontrados
         if (editProfileOption == null) {
             Log.e(TAG, "editProfileOption no encontrado en el layout");
+        }
+        if (cambiarContrasenaOption == null) {
+            Log.e(TAG, "cambiarContrasenaOption no encontrado en el layout");
         }
         if (logoutOption == null) {
             Log.e(TAG, "logoutOption no encontrado en el layout");
@@ -64,11 +87,21 @@ public class ProfileFragment extends Fragment {
         // Configurar listeners
         if (editProfileOption != null) {
             editProfileOption.setOnClickListener(v -> {
-                // Navegar al fragment de detalles del perfil
-                getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new ProfileDetailsFragment())
-                    .addToBackStack(null)
-                    .commit();
+                // Navegar a detalles del perfil
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new ProfileDetailsFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            });
+        }
+
+        if (cambiarContrasenaOption != null) {
+            cambiarContrasenaOption.setOnClickListener(v -> {
+                // Navegar a cambio de contraseña
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new CambioContrasenaFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
             });
         }
 
@@ -88,9 +121,6 @@ public class ProfileFragment extends Fragment {
                 Runtime.getRuntime().exit(0);
             });
         }
-
-        // TODO: Cargar los datos del usuario actual
-        // Por ahora, dejamos los valores por defecto en el XML
 
         return view;
     }

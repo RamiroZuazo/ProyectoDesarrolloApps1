@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvCambioContrasenaTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cambiar Contraseña"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="48dp" />
+
+    <!-- Subtítulo / Instrucciones -->
+    <TextView
+        android:id="@+id/tvCambioContrasenaSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Introduce tu contraseña actual y la nueva contraseña"
+        android:textSize="16sp"
+        android:textColor="#757575"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/tvCambioContrasenaTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp" />
+
+    <!-- Contraseña actual -->
+    <EditText
+        android:id="@+id/etContrasenaActual"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña actual"
+        android:inputType="textPassword"
+        android:autofillHints="password"
+        android:importantForAutofill="yes"
+        app:layout_constraintTop_toBottomOf="@id/tvCambioContrasenaSubtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp" />
+
+    <!-- Nueva contraseña -->
+    <EditText
+        android:id="@+id/etNuevaContrasena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nueva contraseña"
+        android:inputType="textPassword"
+        android:autofillHints="password"
+        android:importantForAutofill="yes"
+        app:layout_constraintTop_toBottomOf="@id/etContrasenaActual"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp" />
+
+    <!-- Confirmar nueva contraseña -->
+    <EditText
+        android:id="@+id/etConfirmarNuevaContrasena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Confirmar nueva contraseña"
+        android:inputType="textPassword"
+        android:autofillHints="password"
+        android:importantForAutofill="yes"
+        app:layout_constraintTop_toBottomOf="@id/etNuevaContrasena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp" />
+
+    <!-- Indicaciones para contraseña segura -->
+    <TextView
+        android:id="@+id/tvRequisitosContrasena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="La contraseña debe tener al menos 8 caracteres."
+        android:textSize="14sp"
+        android:textColor="#757575"
+        app:layout_constraintTop_toBottomOf="@id/etConfirmarNuevaContrasena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp" />
+
+    <!-- Botón para guardar nueva contraseña -->
+    <Button
+        android:id="@+id/btnGuardarContrasena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Guardar Cambios"
+        app:layout_constraintTop_toBottomOf="@id/tvRequisitosContrasena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp" />
+
+    <!-- Botón para cancelar -->
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:backgroundTint="#F44336"
+        app:layout_constraintTop_toBottomOf="@id/btnGuardarContrasena"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout> 
