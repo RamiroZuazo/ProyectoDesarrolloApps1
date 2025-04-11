@@ -71,6 +71,13 @@
                 app:tint="#757575"/>
         </LinearLayout>
 
+        <!-- Separador después de Edit Profile -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            android:layout_marginVertical="8dp"/>
+
         <!-- Separador antes de Log Out -->
         <View
             android:layout_width="match_parent"
