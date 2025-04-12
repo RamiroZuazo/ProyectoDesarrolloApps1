@@ -5,7 +5,7 @@ import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.ChangeP
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.ChangePasswordResponse;
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.RegisterRequest;
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.RegisterResponse;
-import com.example.ProyectoDesarrolloDeApps1.model.Usuario;
+import com.example.ProyectoDesarrolloDeApps1.model.User;  // Aquí es 'User' no 'Usuario'
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,16 +30,16 @@ public class AuthRetrofitRepository implements AuthRepository {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Mapeamos la respuesta de la API a Usuario
+                    // Mapeamos la respuesta de la API a User, no 'Usuario'
                     RegisterResponse res = response.body();
                     RegisterResponse.AuthUser authUser = res.getUser();
 
-                    Usuario usuario = new Usuario(
+                    // Usamos la clase 'User' en lugar de 'Usuario'
+                    User user = new User(
                             authUser.getUid(),
                             authUser.getEmail(),
                             authUser.getName(),
-                            authUser.getPhone(),
-                            null
+                            authUser.getPhone()
                     );
 
                     // Llamamos a callback.onSuccess con el usuario
@@ -55,6 +55,7 @@ public class AuthRetrofitRepository implements AuthRepository {
             }
         });
     }
+
     // Implementación del cambio de contraseña
     @Override
     public void changePassword(ChangePasswordRequest request, ChangePasswordCallback callback) {
@@ -75,5 +76,4 @@ public class AuthRetrofitRepository implements AuthRepository {
             }
         });
     }
-
 }

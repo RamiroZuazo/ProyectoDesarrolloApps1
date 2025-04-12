@@ -48,30 +48,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- ID del pedido con icono -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="12dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_info_details"
-                    android:tint="#6750A4" />
-
-                <TextView
-                    android:id="@+id/tvIdPedidoDetalle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textSize="16sp"
-                    android:textColor="#212121"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
             <!-- Estante con icono -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,7 +91,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:textSize="16sp"
-                    android:textColor="#616161" />
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

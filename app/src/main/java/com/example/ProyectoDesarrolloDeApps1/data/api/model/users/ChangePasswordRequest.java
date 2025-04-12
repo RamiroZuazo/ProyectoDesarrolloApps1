@@ -1,32 +1,22 @@
-package com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication;
+package com.example.ProyectoDesarrolloDeApps1.data.api.model.users;
+
+import com.google.gson.annotations.SerializedName;
 
 public class ChangePasswordRequest {
-    private String email;
+
+    @SerializedName("current_password")
     private String currentPassword;
+
+    @SerializedName("new_password")
     private String newPassword;
 
-    // Constructor para recuperar contraseña (solo email)
-    public ChangePasswordRequest(String email) {
-        this.email = email;
-        this.currentPassword = null;
-        this.newPassword = null;
-    }
-
-    // Constructor para cambiar contraseña (contraseña actual y nueva)
+    // Constructor
     public ChangePasswordRequest(String currentPassword, String newPassword) {
-        this.email = null;
         this.currentPassword = currentPassword;
         this.newPassword = newPassword;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+    // Getters y Setters
     public String getCurrentPassword() {
         return currentPassword;
     }

@@ -17,7 +17,6 @@
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre Usuario"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#000000"/>
@@ -26,7 +25,6 @@
             android:id="@+id/userEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="usuario@email.com"
             android:textSize="14sp"
             android:textColor="#757575"
             android:layout_marginTop="4dp"/>
@@ -118,4 +116,4 @@
                 app:tint="#FF3B30"/>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout> 
+</LinearLayout>

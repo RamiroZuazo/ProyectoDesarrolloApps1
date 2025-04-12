@@ -12,11 +12,11 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import com.example.ProyectoDesarrolloDeApps1.data.repository.token.TokenRepository;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.users.UserRepository;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.users.UserServiceCallback;
+import com.example.ProyectoDesarrolloDeApps1.model.User;
+import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
@@ -29,11 +29,13 @@ public class ProfileFragment extends Fragment {
     private TextView userName;
     private TextView userEmail;
     private LinearLayout editProfileOption;
-    private LinearLayout cambiarContrasenaOption;
     private LinearLayout logoutOption;
 
     @Inject
-    TokenRepository tokenRepository;
+    TokenRepository tokenRepository;  // Inyectar el TokenRepository
+
+    @Inject
+    UserRepository userRepository;  // Inyectar el UserRepository
 
     private FirebaseAuth mAuth;
 
@@ -56,33 +58,8 @@ public class ProfileFragment extends Fragment {
         editProfileOption = view.findViewById(R.id.editProfileOption);
         logoutOption = view.findViewById(R.id.logoutOption);
 
-        // Obtener el usuario actual
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            String name = currentUser.getDisplayName();
-            String email = currentUser.getEmail();
-
-            if (name != null && !name.isEmpty()) {
-                userName.setText(name);
-            } else {
-                userName.setText("Usuario"); // Valor por defecto si el nombre no está disponible
-            }
-
-            if (email != null) {
-                userEmail.setText(email);
-            }
-        }
-
-        // Verificar si los elementos fueron encontrados
-        if (editProfileOption == null) {
-            Log.e(TAG, "editProfileOption no encontrado en el layout");
-        }
-        if (cambiarContrasenaOption == null) {
-            Log.e(TAG, "cambiarContrasenaOption no encontrado en el layout");
-        }
-        if (logoutOption == null) {
-            Log.e(TAG, "logoutOption no encontrado en el layout");
-        }
+        // Obtener datos del usuario desde el repositorio
+        loadUserDataFromRepository();
 
         // Configurar listeners
         if (editProfileOption != null) {
@@ -95,24 +72,14 @@ public class ProfileFragment extends Fragment {
             });
         }
 
-        if (cambiarContrasenaOption != null) {
-            cambiarContrasenaOption.setOnClickListener(v -> {
-                // Navegar a cambio de contraseña
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, new CambioContrasenaFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-            });
-        }
-
         if (logoutOption != null) {
             logoutOption.setOnClickListener(v -> {
                 // Cerrar sesión en Firebase
                 mAuth.signOut();
-                
+
                 // Limpiar el token almacenado
-                tokenRepository.clearToken();
-                
+                tokenRepository.clearToken();  // Usar el método del TokenRepository
+
                 // Forzar el reinicio de la aplicación
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -124,4 +91,43 @@ public class ProfileFragment extends Fragment {
 
         return view;
     }
+
+    private void loadUserDataFromRepository() {
+        userRepository.getUserData(new UserServiceCallback<User>() {
+            @Override
+            public void onSuccess(User user) {
+                Log.d(TAG, "Usuario recibido exitosamente");
+                Log.d(TAG, "Nombre: " + user);
+                if (user != null) {
+                    Log.d(TAG, "Nombre: " + user.getName());
+                    Log.d(TAG, "Email: " + user.getEmail());
+
+                    // Actualiza los campos en la UI
+                    if (user.getName() != null && !user.getName().isEmpty()) {
+                        userName.setText(user.getName());
+                    } else {
+                        userName.setText("Nombre no disponible");
+                    }
+
+                    if (user.getEmail() != null) {
+                        userEmail.setText(user.getEmail());
+                    } else {
+                        userEmail.setText("Email no disponible");
+                    }
+                } else {
+                    Log.e(TAG, "El usuario es NULL");
+                    userName.setText("Usuario no encontrado");
+                    userEmail.setText("Email no encontrado");
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                Log.e(TAG, "Error al obtener los datos del usuario: " + error.getMessage());
+                Toast.makeText(getContext(), "Error al obtener los datos del usuario", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 }

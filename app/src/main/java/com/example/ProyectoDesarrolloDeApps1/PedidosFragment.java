@@ -128,18 +128,16 @@ public class PedidosFragment extends Fragment {
             
             // Obtener referencias a los TextViews dentro del layout inflado
             TextView tvId = pedidoView.findViewById(R.id.tvIdPedido);
-            TextView tvIdDetalle = pedidoView.findViewById(R.id.tvIdPedidoDetalle);
             TextView tvEstante = pedidoView.findViewById(R.id.tvEstantePedido);
             TextView tvGondola = pedidoView.findViewById(R.id.tvGondolaPedido);
             
-            if (tvId == null || tvIdDetalle == null || tvEstante == null || tvGondola == null) {
+            if (tvId == null ||  tvEstante == null || tvGondola == null) {
                 Log.e(TAG, "No se encontraron las vistas dentro de item_pedido.xml");
                 continue;
             }
             
             // Establecer los datos del pedido en las vistas
             tvId.setText("Pedido #" + pedido.getId());
-            tvIdDetalle.setText("ID: " + pedido.getId());
             tvEstante.setText("Estante: " + pedido.getEstante());
             tvGondola.setText("Góndola: " + pedido.getGondola());
             

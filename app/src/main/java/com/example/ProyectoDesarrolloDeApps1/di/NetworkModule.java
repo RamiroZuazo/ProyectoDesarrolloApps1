@@ -2,6 +2,7 @@ package com.example.ProyectoDesarrolloDeApps1.di;
 
 import com.example.ProyectoDesarrolloDeApps1.data.api.AuthApiService;
 import com.example.ProyectoDesarrolloDeApps1.data.api.OrdersApiService;
+import com.example.ProyectoDesarrolloDeApps1.data.api.UserApiService;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
@@ -53,6 +54,17 @@ public class NetworkModule {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
+    
+    @Provides
+    @Singleton
+    @Named("userRetrofit")
+    public Retrofit provideUserRetrofit(OkHttpClient client) {
+        return new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:3000/user/")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
 
     @Provides
     @Singleton
@@ -65,5 +77,11 @@ public class NetworkModule {
     @Singleton
     public OrdersApiService provideOrdersApiService(@Named("pedidosRetrofit") Retrofit retrofit) {
         return retrofit.create(OrdersApiService.class);
+    }
+
+    @Provides
+    @Singleton
+    public UserApiService provideUserApiService(@Named("userRetrofit") Retrofit retrofit) {
+        return retrofit.create(UserApiService.class);
     }
 }
