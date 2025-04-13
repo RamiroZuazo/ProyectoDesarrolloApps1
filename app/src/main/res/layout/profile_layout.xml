@@ -36,9 +36,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Edit Profile Option -->
+        <!-- Cambiar Contraseña -->
         <LinearLayout
-            android:id="@+id/editProfileOption"
+            android:id="@+id/changePasswordOption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -50,17 +50,17 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_profile"
-                app:tint="#757575"/>
+                android:src="@drawable/ic_password"
+                app:tint="#6750A4" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tu Perfil"
+                android:text="Cambiar Contraseña"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp"
-                android:textColor="#000000"/>
+                android:textColor="#212121"/>
 
             <ImageView
                 android:layout_width="24dp"

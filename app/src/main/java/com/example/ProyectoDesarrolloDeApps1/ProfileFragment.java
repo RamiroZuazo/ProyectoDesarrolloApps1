@@ -28,7 +28,7 @@ public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
     private TextView userName;
     private TextView userEmail;
-    private LinearLayout editProfileOption;
+    private LinearLayout changePasswordOption;
     private LinearLayout logoutOption;
 
     @Inject
@@ -55,22 +55,21 @@ public class ProfileFragment extends Fragment {
         // Inicializar las vistas
         userName = view.findViewById(R.id.userName);
         userEmail = view.findViewById(R.id.userEmail);
-        editProfileOption = view.findViewById(R.id.editProfileOption);
+        changePasswordOption = view.findViewById(R.id.changePasswordOption);
         logoutOption = view.findViewById(R.id.logoutOption);
 
         // Obtener datos del usuario desde el repositorio
         loadUserDataFromRepository();
 
-        // Configurar listeners
-        if (editProfileOption != null) {
-            editProfileOption.setOnClickListener(v -> {
-                // Navegar a detalles del perfil
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, new ProfileDetailsFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-            });
-        }
+        // Configurar listener para cambiar contraseña
+        changePasswordOption.setOnClickListener(v -> {
+            // Navegar al fragmento de cambio de contraseña
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, new CambioContrasenaFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
 
         if (logoutOption != null) {
             logoutOption.setOnClickListener(v -> {
