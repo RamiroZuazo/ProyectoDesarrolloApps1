@@ -4,4 +4,7 @@ import com.example.ProyectoDesarrolloDeApps1.data.api.model.orders.OrdersUnasign
 
 public interface OrdersRepository {
     void obtenerPedidosNoAsignados(OrdersServiceCallback callback);
+    void obtenerHistorialPedidos(OrdersRecordCallback callback);
 }
+
+
