@@ -2,6 +2,7 @@ package com.example.ProyectoDesarrolloDeApps1;
 
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,25 +27,28 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupNavigation() {
-        // Home
-        findViewById(R.id.nav_home).setOnClickListener(v -> loadFragment(new PedidosFragment()));
-
-        // Record
-        findViewById(R.id.nav_cards).setOnClickListener(v -> {
-            // Aquí puedes cargar el fragment de record cuando lo implementes
+        // Botón Home
+        findViewById(R.id.nav_home).setOnClickListener(v -> {
+            loadFragment(new PedidosFragment());
         });
 
-        // QR
+        // Botón Historial (o Record)
+        findViewById(R.id.nav_favorites).setOnClickListener(v -> {
+            // Aquí cargamos el fragment de historial de pedidos
+            loadFragment(new OrdersFragment()); // o HistorialPedidosFragment(), según tu caso
+        });
+
+        // Botón QR (ejemplo)
         findViewById(R.id.nav_qr).setOnClickListener(v -> {
-            // Aquí puedes cargar el fragment de QR cuando lo implementes
+            // Cargar un fragment para QR
+            // loadFragment(new QrFragment());
         });
 
-        // Favoritos
+        // Botón Favoritos (opcional)
+        // findViewById(R.id.nav_favorites).setOnClickListener(...);
 
-
-        // Profile
+        // Botón Perfil
         findViewById(R.id.nav_profile).setOnClickListener(v -> {
-            // Cargar el fragment de perfil
             loadFragment(new ProfileFragment());
         });
     }
