@@ -41,9 +41,12 @@ public class OrdersRetrofitRepository implements OrdersRepository {
                         if (response.isSuccessful() && response.body() != null) {
                             callback.onSuccess(response.body());
                         } else {
-                            callback.onError(
-                                    new Exception("Error en la respuesta: " + response.message())
-                            );
+                            // Verificamos los errores específicos del token
+                            if (response.code() == 400 || response.code() == 401) {
+                                callback.onError(new Exception("Token inválido o mal formado. Redirigiendo al inicio de sesión."));
+                            } else {
+                                callback.onError(new Exception("Error en la respuesta: " + response.message()));
+                            }
                         }
                     }
 
@@ -54,7 +57,6 @@ public class OrdersRetrofitRepository implements OrdersRepository {
                 });
     }
 
-    // Implementación para historial de pedidos
     @Override
     public void obtenerHistorialPedidos(OrdersRecordCallback callback) {
         String token = tokenRepository.getToken();
@@ -71,9 +73,12 @@ public class OrdersRetrofitRepository implements OrdersRepository {
                             recordResponse.setPedidos(response.body());
                             callback.onSuccess(recordResponse);
                         } else {
-                            callback.onError(
-                                    new Exception("Error en la respuesta: " + response.message())
-                            );
+                            // Verificamos los errores específicos del token
+                            if (response.code() == 400 || response.code() == 401) {
+                                callback.onError(new Exception("Token inválido o mal formado. Redirigiendo al inicio de sesión."));
+                            } else {
+                                callback.onError(new Exception("Error en la respuesta: " + response.message()));
+                            }
                         }
                     }
 
@@ -84,3 +89,4 @@ public class OrdersRetrofitRepository implements OrdersRepository {
                 });
     }
 }
+

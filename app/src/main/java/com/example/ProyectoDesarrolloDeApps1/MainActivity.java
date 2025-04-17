@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.example.ProyectoDesarrolloDeApps1.data.repository.token.TokenRepository;
 
 import javax.inject.Inject;
@@ -37,6 +36,33 @@ public class MainActivity extends AppCompatActivity {
     TokenRepository tokenRepository;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Verificamos si el usuario está autenticado
+        if (mAuth.getCurrentUser() != null) {
+            // Intentamos renovar el token
+            mAuth.getCurrentUser().getIdToken(true)
+                    .addOnSuccessListener(idTokenResult -> {
+                        String firebaseIdToken = idTokenResult.getToken();
+                        if (firebaseIdToken != null) {
+                            // Guardamos el token renovado en el TokenRepository
+                            tokenRepository.saveToken(firebaseIdToken);
+
+                            // Ahora que el token está guardado, se puede redirigir a HomeActivity
+                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();  // Finaliza la actividad actual
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        // Si hubo un error al renovar el token
+                        Toast.makeText(MainActivity.this, "Error al renovar el token de Firebase", Toast.LENGTH_SHORT).show();
+                    });
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -53,53 +79,68 @@ public class MainActivity extends AppCompatActivity {
         tvOlvidasteContrasena = findViewById(R.id.tvOlvidasteContrasena);
         btnCrearCuenta = findViewById(R.id.btnCrearCuenta);
 
-        // Configuramos la ventana
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        // Verificar si ya hay un token guardado
+        String token = tokenRepository.getToken();
+        if (token != null) {
+            // Si el token está disponible, validamos que el usuario siga autenticado en Firebase
+            mAuth.getCurrentUser().getIdToken(true)
+                    .addOnSuccessListener(idTokenResult -> {
+                        String firebaseIdToken = idTokenResult.getToken();
+                        if (firebaseIdToken != null) {
+                            // Guardar el token en el TokenRepository si es necesario
+                            tokenRepository.saveToken(firebaseIdToken);
 
-        // Acción de iniciar sesión
-        btnIniciarSesion.setOnClickListener(v -> {
-            String email = etEmail.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
-
-            // Validar campos no vacíos
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(MainActivity.this, "Por favor ingrese todos los campos", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Validar en Firebase Authentication
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, task -> {
-                        if (task.isSuccessful()) {
-                            // Si la validación es exitosa, obtener el token de Firebase
-                            mAuth.getCurrentUser().getIdToken(true)
-                                    .addOnSuccessListener(idTokenResult -> {
-                                        String firebaseIdToken = idTokenResult.getToken();
-                                        if (firebaseIdToken != null) {
-                                            // Guardar el token de Firebase en el TokenRepository
-                                            tokenRepository.saveToken(firebaseIdToken);
-                                        }
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        // Manejar el error al obtener el token
-                                        Toast.makeText(MainActivity.this, "Error al obtener el token de Firebase", Toast.LENGTH_SHORT).show();
-                                    });
-
-                            // Navegar a la pantalla home
+                            // Si el token sigue siendo válido, redirigir al usuario a la HomeActivity
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();  // Finaliza la actividad actual
-                        } else {
-                            // Si la validación falla
-                            Toast.makeText(MainActivity.this, "Error en el inicio de sesión", Toast.LENGTH_SHORT).show();
                         }
+                    })
+                    .addOnFailureListener(e -> {
+                        // Si el token no es válido o hubo un error, redirigir al login
+                        Toast.makeText(MainActivity.this, "Sesión caducada, por favor inicie sesión nuevamente.", Toast.LENGTH_SHORT).show();
                     });
-        });
+        } else {
+            // Si el token no está disponible, permitir el inicio de sesión
+            btnIniciarSesion.setOnClickListener(v -> {
+                String email = etEmail.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
 
+                // Validar campos no vacíos
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Por favor ingrese todos los campos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Validar en Firebase Authentication
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, task -> {
+                            if (task.isSuccessful()) {
+                                // Si la validación es exitosa, obtener el token de Firebase
+                                mAuth.getCurrentUser().getIdToken(true)
+                                        .addOnSuccessListener(idTokenResult -> {
+                                            String firebaseIdToken = idTokenResult.getToken();
+                                            if (firebaseIdToken != null) {
+                                                // Guardar el token de Firebase en el TokenRepository
+                                                tokenRepository.saveToken(firebaseIdToken);
+
+                                                // Navegar a la pantalla home
+                                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                                startActivity(intent);
+                                                finish();  // Finaliza la actividad actual
+                                            }
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // Manejar el error al obtener el token
+                                            Toast.makeText(MainActivity.this, "Error al obtener el token de Firebase", Toast.LENGTH_SHORT).show();
+                                        });
+                            } else {
+                                // Si la validación falla
+                                Toast.makeText(MainActivity.this, "Error en el inicio de sesión", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            });
+        }
 
         // Acción de "¿Olvidaste tu contraseña?"
         tvOlvidasteContrasena.setOnClickListener(v -> {
@@ -120,6 +161,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
 }

@@ -31,14 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
-<<<<<<< HEAD
-    private TextView userName;
-    private TextView userEmail;
-    private LinearLayout changePasswordOption;
-    private LinearLayout logoutOption;
-=======
     private static final int TIMEOUT_DELAY = 5000; // 5 segundos
->>>>>>> de6ec02414cd4e778d4de3a3876c48e6dd23bf2d
 
     @Inject
     TokenRepository tokenRepository;
@@ -74,7 +67,7 @@ public class ProfileFragment extends Fragment {
         logoutOption = view.findViewById(R.id.logoutOption);
         scrollViewProfile = view.findViewById(R.id.scrollViewProfile);
         errorLayout = view.findViewById(R.id.error_layout);
-        
+
         // Inicializar vistas del error layout
         errorMessage = errorLayout.findViewById(R.id.tvErrorMessage);
         retryButton = errorLayout.findViewById(R.id.btnRetry);
@@ -82,39 +75,11 @@ public class ProfileFragment extends Fragment {
 
         setupListeners();
 
-<<<<<<< HEAD
-        // Configurar listener para cambiar contraseña
-        changePasswordOption.setOnClickListener(v -> {
-            // Navegar al fragmento de cambio de contraseña
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new CambioContrasenaFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });
-
-
-        if (logoutOption != null) {
-            logoutOption.setOnClickListener(v -> {
-                // Cerrar sesión en Firebase
-                mAuth.signOut();
-
-                // Limpiar el token almacenado
-                tokenRepository.clearToken();  // Usar el método del TokenRepository
-
-                // Forzar el reinicio de la aplicación
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                getActivity().finish();
-                Runtime.getRuntime().exit(0);
-            });
-=======
         // Verificar conexión antes de cargar
         if (isNetworkAvailable()) {
             loadUserData();
         } else {
             showError("No hay conexión a Internet");
->>>>>>> de6ec02414cd4e778d4de3a3876c48e6dd23bf2d
         }
 
         return view;
@@ -166,10 +131,10 @@ public class ProfileFragment extends Fragment {
 
     private boolean isNetworkAvailable() {
         if (getContext() == null) return false;
-        
-        ConnectivityManager connectivityManager = (ConnectivityManager) 
-            getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
         if (connectivityManager == null) return false;
 
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
@@ -199,7 +164,7 @@ public class ProfileFragment extends Fragment {
             public void onSuccess(User user) {
                 cancelLoadingTimeout();
                 Log.d(TAG, "Usuario recibido exitosamente");
-                
+
                 if (user == null) {
                     showError("No se pudo cargar la información del usuario");
                     return;
@@ -213,7 +178,18 @@ public class ProfileFragment extends Fragment {
             public void onError(Throwable error) {
                 cancelLoadingTimeout();
                 Log.e(TAG, "Error al obtener los datos del usuario: " + error.getMessage());
-                showError("Error de conexión: No se pudo conectar con el servidor");
+
+                // Si el error es debido a un token inválido, mal formado o expirado, redirigir al inicio de sesión
+                if (error.getMessage().contains("Token inválido") || error.getMessage().contains("mal formado") || error.getMessage().contains("expirado")) {
+                    // Limpiar el token antes de redirigir
+                    tokenRepository.clearToken();
+                    Log.e(TAG, "Token inválido, mal formado o expirado, redirigiendo a login.");
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish(); // Finaliza la actividad actual
+                } else {
+                    showError("Error de conexión: No se pudo conectar con el servidor");
+                }
             }
         });
     }

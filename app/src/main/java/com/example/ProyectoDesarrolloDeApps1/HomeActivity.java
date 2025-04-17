@@ -1,7 +1,6 @@
 package com.example.ProyectoDesarrolloDeApps1;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -22,20 +21,20 @@ public class HomeActivity extends AppCompatActivity {
 
         // Cargar el fragment de pedidos al inicio
         if (savedInstanceState == null) {
-            loadFragment(new PedidosFragment());
+            loadFragment(new OrdersUnasignedFragment());
         }
     }
 
     private void setupNavigation() {
         // Botón Home
         findViewById(R.id.nav_home).setOnClickListener(v -> {
-            loadFragment(new PedidosFragment());
+            loadFragment(new OrdersUnasignedFragment());
         });
 
         // Botón Historial (o Record)
         findViewById(R.id.nav_favorites).setOnClickListener(v -> {
             // Aquí cargamos el fragment de historial de pedidos
-            loadFragment(new OrdersFragment()); // o HistorialPedidosFragment(), según tu caso
+            loadFragment(new OrdersRecordFragment()); // o HistorialPedidosFragment(), según tu caso
         });
 
         // Botón QR (ejemplo)
