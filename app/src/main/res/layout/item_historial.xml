@@ -42,9 +42,11 @@
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:background="@drawable/rounded_background_green"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp" />
+                android:background="@drawable/rounded_background_conditional"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:minWidth="100dp"
+                android:gravity="center" />
         </LinearLayout>
 
         <!-- Contenido del pedido -->
@@ -65,7 +67,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_compass"
+                    android:src="@drawable/ic_record"
                     app:tint="#6750A4" />
 
                 <TextView
@@ -88,8 +90,8 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_myplaces"
-                    android:tint="#6750A4" />
+                    android:src="@drawable/ic_profile"
+                    app:tint="#6750A4" />
 
                 <TextView
                     android:id="@+id/tvNombreDestinatario"
@@ -110,8 +112,8 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_mapmode"
-                    android:tint="#6750A4" />
+                    android:src="@drawable/ic_location"
+                    app:tint="#6750A4" />
 
                 <TextView
                     android:id="@+id/tvDireccion"
@@ -123,4 +125,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView> 
+</com.google.android.material.card.MaterialCardView>

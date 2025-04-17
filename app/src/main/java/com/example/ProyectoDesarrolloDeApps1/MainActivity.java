@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Verificar si ya hay un token guardado
         String token = tokenRepository.getToken();
-        if (token != null) {
-            // Si el token está disponible, validamos que el usuario siga autenticado en Firebase
+        if (token != null && mAuth.getCurrentUser() != null) {
+            // Si el token está disponible y el usuario está autenticado, validamos que el usuario siga autenticado en Firebase
             mAuth.getCurrentUser().getIdToken(true)
                     .addOnSuccessListener(idTokenResult -> {
                         String firebaseIdToken = idTokenResult.getToken();
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Sesión caducada, por favor inicie sesión nuevamente.", Toast.LENGTH_SHORT).show();
                     });
         } else {
-            // Si el token no está disponible, permitir el inicio de sesión
+            // Si el token no está disponible o el usuario no está autenticado, permitir el inicio de sesión
             btnIniciarSesion.setOnClickListener(v -> {
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
