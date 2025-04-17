@@ -2,6 +2,8 @@ package com.example.ProyectoDesarrolloDeApps1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -96,14 +99,7 @@ public class ProfileFragment extends Fragment {
 
         // Configurar listener para cerrar sesión
         logoutOption.setOnClickListener(v -> {
-            mAuth.signOut();
-            tokenRepository.clearToken();
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            if (getActivity() != null) {
-                getActivity().finish();
-            }
+            showLogoutConfirmationDialog();
         });
 
         // Configurar listeners del error layout
@@ -238,5 +234,34 @@ public class ProfileFragment extends Fragment {
                 userEmail.setText("Cargando...");
             });
         }
+    }
+
+    private void showLogoutConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_logout_confirmation, null);
+        builder.setView(dialogView);
+
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
+        
+        Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
+        Button btnConfirm = dialogView.findViewById(R.id.btn_confirm);
+        
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+        
+        btnConfirm.setOnClickListener(v -> {
+            dialog.dismiss();
+            // Lógica de cierre de sesión
+            mAuth.signOut();
+            tokenRepository.clearToken();
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            if (getActivity() != null) {
+                getActivity().finish();
+            }
+        });
+        
+        dialog.show();
     }
 }
