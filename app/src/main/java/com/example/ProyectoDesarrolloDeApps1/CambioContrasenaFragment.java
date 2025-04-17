@@ -1,5 +1,6 @@
 package com.example.ProyectoDesarrolloDeApps1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.ChangePasswordRequest;
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.ChangePasswordResponse;
+import com.example.ProyectoDesarrolloDeApps1.data.repository.token.TokenRepository;
 import com.example.ProyectoDesarrolloDeApps1.data.repository.users.ChangePasswordCallBack;
 import com.example.ProyectoDesarrolloDeApps1.data.repository.users.UserRepository;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +32,8 @@ public class CambioContrasenaFragment extends Fragment {
     
     @Inject
     UserRepository userRepository;
-
+    @Inject
+    TokenRepository tokenRepository;
     public CambioContrasenaFragment() {
         // Constructor vacío requerido
     }
@@ -101,10 +104,21 @@ public class CambioContrasenaFragment extends Fragment {
                 @Override
                 public void onError(Throwable error) {
                     if (getActivity() == null || !isAdded()) return;
-                    
+
                     getActivity().runOnUiThread(() -> {
                         Log.e(TAG, "Error al cambiar contraseña: " + error.getMessage());
-                        Toast.makeText(getContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        // Si el error está relacionado con un token inválido, mal formado o expirado
+                        if (error.getMessage().contains("Token inválido") || error.getMessage().contains("mal formado") || error.getMessage().contains("expirado")) {
+                            // Limpiar el token y redirigir al usuario al login
+                            tokenRepository.clearToken();
+                            Log.e(TAG, "Token inválido, mal formado o expirado, redirigiendo a login.");
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            startActivity(intent);
+                            getActivity().finish(); // Finaliza la actividad actual
+                        } else {
+                            Toast.makeText(getContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                         resetearBotones();
                     });
                 }

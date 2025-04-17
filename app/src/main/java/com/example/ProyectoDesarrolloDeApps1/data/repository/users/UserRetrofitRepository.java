@@ -35,8 +35,7 @@ public class UserRetrofitRepository implements UserRepository {
     @Override
     public void getUserData(UserServiceCallback<User> callback) {
         String token = tokenRepository.getToken();
-        Log.d(TAG, "Token being used: " + (token != null ?
-                (token.length() > 10 ? token.substring(0, 5) + "..." + token.substring(token.length() - 5) : token) : "null"));
+        Log.d(TAG, "Token being used: " + (token != null ? (token.length() > 10 ? token.substring(0, 5) + "..." + token.substring(token.length() - 5) : token) : "null"));
 
         String authHeader = "Bearer " + token;
 
@@ -52,13 +51,19 @@ public class UserRetrofitRepository implements UserRepository {
                 } else {
                     // Log error response body if available
                     try {
-                        String errorBody = response.errorBody() != null ?
-                                response.errorBody().string() : "No error body";
+                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "No error body";
                         Log.e(TAG, "Error response: " + errorBody);
                     } catch (Exception e) {
                         Log.e(TAG, "Failed to read error body", e);
                     }
-                    callback.onError(new Exception("Error en la respuesta: " + response.code()));
+
+                    // Si el código es 401 (Token inválido, mal formado o expirado), limpiamos el token
+                    if (response.code() == 401) {
+                        tokenRepository.clearToken();
+                        callback.onError(new Exception("Token inválido, mal formado o expirado. Redirigiendo al inicio de sesión."));
+                    } else {
+                        callback.onError(new Exception("Error en la respuesta: " + response.code()));
+                    }
                 }
             }
 
@@ -70,11 +75,8 @@ public class UserRetrofitRepository implements UserRepository {
         });
     }
 
-
-
     @Override
     public void changePassword(ChangePasswordRequest request, ChangePasswordCallBack callback) {
-        // Obtención del token y cambio de contraseña
         String token = tokenRepository.getToken();
         if (token == null || token.isEmpty()) {
             callback.onError(new Exception("Token no disponible"));
@@ -89,7 +91,13 @@ public class UserRetrofitRepository implements UserRepository {
                 if (response.isSuccessful() && response.body() != null) {
                     callback.onSuccess(response.body());
                 } else {
-                    callback.onError(new Exception("Error al cambiar la contraseña: " + response.code()));
+                    // Si el código es 401 (Token inválido, mal formado o expirado), limpiamos el token
+                    if (response.code() == 401) {
+                        tokenRepository.clearToken();
+                        callback.onError(new Exception("Token inválido, mal formado o expirado. Redirigiendo al inicio de sesión."));
+                    } else {
+                        callback.onError(new Exception("Error al cambiar la contraseña: " + response.code()));
+                    }
                 }
             }
 
@@ -99,4 +107,5 @@ public class UserRetrofitRepository implements UserRepository {
             }
         });
     }
+
 }
