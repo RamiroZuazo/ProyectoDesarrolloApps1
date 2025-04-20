@@ -42,7 +42,6 @@
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:background="@drawable/status_background"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp"
                 android:minWidth="100dp"

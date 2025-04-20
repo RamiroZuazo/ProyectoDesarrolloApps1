@@ -229,11 +229,19 @@ public class OrdersRecordFragment extends Fragment {
                     tvIdPedido.setText("Pedido #" + pedido.getId());
                     tvEstadoEntrega.setText(pedido.getEstado());
                     
+                    // Diagnosticar el estado
+                    String estado = pedido.getEstado();
+                    Log.d(TAG, "Estado del pedido #" + pedido.getId() + ": '" + estado + "'");
+                    
                     // Configurar el color del estado basado en si es "no entregado"
-                    if (pedido.getEstado() != null && pedido.getEstado().equalsIgnoreCase("no entregado")) {
-                        tvEstadoEntrega.setActivated(true);
+                    if (estado != null && estado.trim().equalsIgnoreCase("no entregado")) {
+                        Log.d(TAG, "Aplicando fondo ROJO al pedido #" + pedido.getId());
+                        tvEstadoEntrega.setBackgroundResource(R.drawable.status_background);
+                        tvEstadoEntrega.setContentDescription("Estado: No entregado (rojo)");
                     } else {
-                        tvEstadoEntrega.setActivated(false);
+                        Log.d(TAG, "Aplicando fondo VERDE al pedido #" + pedido.getId());
+                        tvEstadoEntrega.setBackgroundResource(R.drawable.status_background_green);
+                        tvEstadoEntrega.setContentDescription("Estado: Entregado (verde)");
                     }
 
                     // Cálculo de duración
