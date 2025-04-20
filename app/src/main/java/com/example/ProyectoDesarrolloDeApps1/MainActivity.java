@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Acción de "¿Olvidaste tu contraseña?"
         tvOlvidasteContrasena.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, RecuperarContrasenaActivity.class);
+            Intent intent = new Intent(MainActivity.this, RecoverPasswordActivity.class);
             startActivity(intent);
         });
 
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         btnCrearCuenta.setOnClickListener(v -> {
             try {
                 // Redirigir a la actividad de registro de usuario
-                Intent intent = new Intent(MainActivity.this, RegistroUsuarioActivity.class);
+                Intent intent = new Intent(MainActivity.this, RegisterUserActivity.class);
                 startActivity(intent);
             } catch (Exception e) {
                 // Registra el error y muestra un mensaje

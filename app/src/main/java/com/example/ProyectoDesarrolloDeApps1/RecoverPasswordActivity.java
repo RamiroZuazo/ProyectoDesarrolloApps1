@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class RecuperarContrasenaActivity extends AppCompatActivity {
+public class RecoverPasswordActivity extends AppCompatActivity {
 
     @Inject
     AuthRepository authRepository;
@@ -38,7 +38,7 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
         TextView tvVolverLogin = findViewById(R.id.tvVolverLogin);
 
         tvVolverLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(RecuperarContrasenaActivity.this, MainActivity.class);
+            Intent intent = new Intent(RecoverPasswordActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         });
@@ -60,10 +60,10 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ChangePasswordResponse response) {
                 runOnUiThread(() -> {
-                    Toast.makeText(RecuperarContrasenaActivity.this, response.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(RecoverPasswordActivity.this, response.getMessage(), Toast.LENGTH_LONG).show();
 
                     new Handler().postDelayed(() -> {
-                        Intent intent = new Intent(RecuperarContrasenaActivity.this, MainActivity.class);
+                        Intent intent = new Intent(RecoverPasswordActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }, 4000); // 10 segundos de espera
@@ -72,7 +72,7 @@ public class RecuperarContrasenaActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable error) {
-                runOnUiThread(() -> Toast.makeText(RecuperarContrasenaActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(RecoverPasswordActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show());
             }
         });
     }

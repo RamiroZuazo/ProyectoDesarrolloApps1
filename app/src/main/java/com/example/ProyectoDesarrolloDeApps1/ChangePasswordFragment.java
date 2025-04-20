@@ -28,8 +28,8 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class CambioContrasenaFragment extends Fragment {
-    private static final String TAG = "CambioContrasenaFragment";
+public class ChangePasswordFragment extends Fragment {
+    private static final String TAG = "ChangePasswordFragment";
     private EditText etContrasenaActual, etNuevaContrasena, etConfirmarNuevaContrasena;
     private Button btnGuardarContrasena, btnCancelar;
     
@@ -37,7 +37,7 @@ public class CambioContrasenaFragment extends Fragment {
     UserRepository userRepository;
     @Inject
     TokenRepository tokenRepository;
-    public CambioContrasenaFragment() {
+    public ChangePasswordFragment() {
         // Constructor vacío requerido
     }
 

@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
         // Configurar listener para cambiar contraseña
         changePasswordOption.setOnClickListener(v -> {
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new CambioContrasenaFragment());
+            transaction.replace(R.id.fragment_container, new ChangePasswordFragment());
             transaction.addToBackStack(null);
             transaction.commit();
         });

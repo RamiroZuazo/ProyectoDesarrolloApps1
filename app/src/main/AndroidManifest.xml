@@ -22,7 +22,7 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistroUsuarioActivity"
+            android:name=".RegisterUserActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RecuperarContrasenaActivity"
+            android:name=".RecoverPasswordActivity"
             android:exported="true" />
         
     </application>

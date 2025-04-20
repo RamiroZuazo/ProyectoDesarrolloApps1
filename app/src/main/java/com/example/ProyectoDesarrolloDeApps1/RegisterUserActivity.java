@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class RegistroUsuarioActivity extends AppCompatActivity {
+public class RegisterUserActivity extends AppCompatActivity {
 
     @Inject
     AuthRepository authRepository;
@@ -71,7 +71,7 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         // Redirigir a la pantalla de login
         tvIrAlLogin.setOnClickListener(v -> {
             // Cambiar a la pantalla de login
-            Intent intent = new Intent(RegistroUsuarioActivity.this, MainActivity.class);
+            Intent intent = new Intent(RegisterUserActivity.this, MainActivity.class);
             startActivity(intent);
         });
     }
@@ -85,18 +85,18 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
                     tokenRepository.saveToken(response.getToken());
                 }
                 
-                Toast.makeText(RegistroUsuarioActivity.this,
+                Toast.makeText(RegisterUserActivity.this,
                         "Registro exitoso. Bienvenido " + response.getUser().getName(), Toast.LENGTH_SHORT).show();
 
                 // Ir a la pantalla de login o pantalla principal
-                Intent intent = new Intent(RegistroUsuarioActivity.this, MainActivity.class);
+                Intent intent = new Intent(RegisterUserActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
 
             @Override
             public void onError(Throwable error) {
-                Toast.makeText(RegistroUsuarioActivity.this,
+                Toast.makeText(RegisterUserActivity.this,
                         "Error en el registro: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
