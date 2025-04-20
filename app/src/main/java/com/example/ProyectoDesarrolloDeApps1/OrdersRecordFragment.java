@@ -228,6 +228,13 @@ public class OrdersRecordFragment extends Fragment {
                     // Llenado de datos
                     tvIdPedido.setText("Pedido #" + pedido.getId());
                     tvEstadoEntrega.setText(pedido.getEstado());
+                    
+                    // Configurar el color del estado basado en si es "no entregado"
+                    if (pedido.getEstado() != null && pedido.getEstado().equalsIgnoreCase("no entregado")) {
+                        tvEstadoEntrega.setActivated(true);
+                    } else {
+                        tvEstadoEntrega.setActivated(false);
+                    }
 
                     // Cálculo de duración
                     long inicio = pedido.getHoraInicio();
