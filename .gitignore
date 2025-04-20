@@ -13,3 +13,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Clave de Firebase
+serviceAccountKey.json
+
+# Node.js
+node_modules/
+.env
