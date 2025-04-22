@@ -2,6 +2,7 @@ package com.example.ProyectoDesarrolloDeApps1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -59,6 +60,9 @@ public class RegisterUserActivity extends AppCompatActivity {
                 Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             } else if (!contrasena.equals(repetirContrasena)) {
                 Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            } else if (contrasena.length() < 6) {
+                // Verificar que la contraseña tenga al menos 6 caracteres
+                Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
             } else {
                 // Crear el objeto RegisterRequest
                 RegisterRequest registerRequest = new RegisterRequest(email, contrasena, nombreCompleto, telefono);
@@ -84,21 +88,26 @@ public class RegisterUserActivity extends AppCompatActivity {
                 if (response.getToken() != null) {
                     tokenRepository.saveToken(response.getToken());
                 }
-                
-                Toast.makeText(RegisterUserActivity.this,
-                        "Registro exitoso. Bienvenido " + response.getUser().getName(), Toast.LENGTH_SHORT).show();
 
-                // Ir a la pantalla de login o pantalla principal
-                Intent intent = new Intent(RegisterUserActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                // Mostrar el mensaje de éxito y la instrucción para verificar el correo
+                Toast.makeText(RegisterUserActivity.this,
+                        "Registro exitoso. Por favor revisa tu correo electrónico para verificar tu cuenta :).", Toast.LENGTH_LONG).show();
+
+                // Usar Handler para retrasar la redirección a la pantalla de login por 10 segundos
+                new Handler().postDelayed(() -> {
+                    // Redirigir a la pantalla de login
+                    Intent intent = new Intent(RegisterUserActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }, 10000); // 10000 milisegundos = 10 segundos
             }
 
             @Override
             public void onError(Throwable error) {
-                Toast.makeText(RegisterUserActivity.this,
-                        "Error en el registro: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                // Mostrar el error del servidor en un Toast
+                Toast.makeText(RegisterUserActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
+
         });
     }
 }

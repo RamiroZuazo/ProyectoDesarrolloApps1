@@ -7,6 +7,8 @@ import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.Registe
 import com.example.ProyectoDesarrolloDeApps1.data.api.model.authtication.RegisterResponse;
 import com.example.ProyectoDesarrolloDeApps1.model.User;  // Aquí es 'User' no 'Usuario'
 
+import org.json.JSONObject;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -30,7 +32,6 @@ public class AuthRetrofitRepository implements AuthRepository {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Mapeamos la respuesta de la API a User, no 'Usuario'
                     RegisterResponse res = response.body();
                     RegisterResponse.AuthUser authUser = res.getUser();
 
@@ -42,12 +43,25 @@ public class AuthRetrofitRepository implements AuthRepository {
                             authUser.getPhone()
                     );
 
-                    // Llamamos a callback.onSuccess con el usuario
                     callback.onSuccess(res);
                 } else {
-                    callback.onError(new Exception("Error en la respuesta: " + response.message()));
+                    // Aquí extraemos el mensaje de error si existe
+                    if (response.errorBody() != null) {
+                        try {
+                            // Parseamos el cuerpo de la respuesta de error para obtener el mensaje
+                            String errorResponse = response.errorBody().string();
+                            // Este es el mensaje que contiene el error del servidor
+                            String errorMessage = new JSONObject(errorResponse).getString("error");
+
+                            // Llamamos a onError con el mensaje de error
+                            callback.onError(new Exception(errorMessage));
+                        } catch (Exception e) {
+                            callback.onError(new Exception("Error desconocido: " + e.getMessage()));
+                        }
+                    }
                 }
             }
+
 
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {

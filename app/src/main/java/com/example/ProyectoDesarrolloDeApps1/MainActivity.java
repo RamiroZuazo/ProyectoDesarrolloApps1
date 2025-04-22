@@ -116,30 +116,38 @@ public class MainActivity extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, task -> {
                             if (task.isSuccessful()) {
-                                // Si la validación es exitosa, obtener el token de Firebase
-                                mAuth.getCurrentUser().getIdToken(true)
-                                        .addOnSuccessListener(idTokenResult -> {
-                                            String firebaseIdToken = idTokenResult.getToken();
-                                            if (firebaseIdToken != null) {
-                                                // Guardar el token de Firebase en el TokenRepository
-                                                tokenRepository.saveToken(firebaseIdToken);
+                                // Verificar si el correo electrónico está verificado
+                                if (mAuth.getCurrentUser() != null && !mAuth.getCurrentUser().isEmailVerified()) {
+                                    // Si el correo no está verificado, mostrar un mensaje y no permitir el inicio de sesión
+                                    Toast.makeText(MainActivity.this, "Por favor, verifica tu correo electrónico.", Toast.LENGTH_LONG).show();
+                                    mAuth.signOut(); // Opcional: Cerrar sesión si el correo no está verificado
+                                } else {
+                                    // Si la validación es exitosa y el correo está verificado
+                                    mAuth.getCurrentUser().getIdToken(true)
+                                            .addOnSuccessListener(idTokenResult -> {
+                                                String firebaseIdToken = idTokenResult.getToken();
+                                                if (firebaseIdToken != null) {
+                                                    // Guardar el token de Firebase en el TokenRepository
+                                                    tokenRepository.saveToken(firebaseIdToken);
 
-                                                // Navegar a la pantalla home
-                                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                                startActivity(intent);
-                                                finish();  // Finaliza la actividad actual
-                                            }
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            // Manejar el error al obtener el token
-                                            Toast.makeText(MainActivity.this, "Error al obtener el token de Firebase", Toast.LENGTH_SHORT).show();
-                                        });
+                                                    // Navegar a la pantalla home
+                                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                                    startActivity(intent);
+                                                    finish();  // Finaliza la actividad actual
+                                                }
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                // Manejar el error al obtener el token
+                                                Toast.makeText(MainActivity.this, "Error al obtener el token de Firebase", Toast.LENGTH_SHORT).show();
+                                            });
+                                }
                             } else {
                                 // Si la validación falla
                                 Toast.makeText(MainActivity.this, "Error en el inicio de sesión", Toast.LENGTH_SHORT).show();
                             }
                         });
             });
+
         }
 
         // Acción de "¿Olvidaste tu contraseña?"
